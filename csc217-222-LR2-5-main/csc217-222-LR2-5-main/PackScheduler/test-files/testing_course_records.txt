@@ -1,0 +1,1 @@
+CSC216,Software Development Fundamentals,002,3,mlsmith,10,MWF,830,1020

@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"edu.ncsu.csc216.wolf_scheduler.io","l":"CourseRecordIOTest"}];updateSearchResults();

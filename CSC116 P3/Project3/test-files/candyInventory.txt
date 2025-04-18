@@ -1,0 +1,4 @@
+LH8869,Lemonheads,20
+AH1289,Airheads,15
+GB9806,Gummy Bears,18
+JR6578,Jolly Ranchers,12

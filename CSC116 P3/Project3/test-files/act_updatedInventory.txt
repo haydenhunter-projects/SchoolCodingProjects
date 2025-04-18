@@ -1,0 +1,14 @@
+PE0195,pencil,34
+MP8917,mechanical pencil,8
+DP8768,drawing pencils,5
+NP1800,notepad,4
+P19076,black pen,35
+P90557,blue pen,16
+PM1889,black permanent marker,12
+DE6785,black dry erase marker,8
+DE8079,red dry erase marker,13
+BS3045,box of staples,15
+PC8866,small paper clips,23
+PC9876,large paper clips,12
+T91180,tape,20
+MT4987,masking tape,45
