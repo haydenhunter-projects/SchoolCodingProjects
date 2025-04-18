@@ -1,0 +1,20 @@
+
+/* This is the picture attributes in the first row first column */
+.HaydenPicture {
+    width: 200px;
+    height: 250px;
+    border: 3px solid black;
+    border-radius: 50px;
+}
+
+/* This is the vertical line used in the second row second column */
+.verticalLine {
+      border-left: 2px solid black;
+    }
+
+/* This is the horizontal line used in the first row */
+.horizontalLine {
+      border-bottom: 2px solid black;
+      margin-bottom: 15px;
+    }
+

@@ -1,0 +1,83 @@
+#TopOfPageBlock {
+    background-color: red;
+}
+
+#BackgroundImage{
+    background-image: url(project1image.jpg);
+    background-position: top;
+    background-size: cover;
+    text-align: center;
+    color: white;
+    margin-top: -21px;
+    opacity: .8;
+}
+
+#firstH3 {
+    text-align: right;
+}
+
+#firstH1 {
+    text-align: center;
+}
+
+#Syllabus1 {
+    background-color: blue;
+    text-align: center;
+}
+
+#WolfwareLink{
+    color:red
+}
+
+#Table1{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#Syllabus2 {
+    background-color: green;
+    text-align: center;
+}
+
+#Table2{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#Syllabus3 {
+    background-color: yellow;
+    text-align: center;
+}
+
+#Table3{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#YoutubeHeader{
+    background-color: pink;
+    text-align: center;
+}
+
+#YoutubeBody {
+    text-align: center;
+}
+
+#ImageHeader{
+    background-color: Orange;
+    text-align: center;
+}
+
+#Footer{
+    background-color: orange;
+    text-align: center;
+}
+
+#FlamingoLeft{
+    margin-left: 25px;
+}
+
+#FlamingoRight{
+    float: right;
+    margin-right: 25px;
+}
