@@ -1,0 +1,107 @@
+{% extends "studentinfo/base.html" %}
+
+{% block content %}
+
+<!-- This html class is used to populate the enrollment tab portion of the website -->
+<div class="container text-center mt-5">
+    <div class="row">
+        <div class="col-md">
+            <select class="form-select" id="studentselect">
+                {% for row in student %}
+                <option value="{{ row.firstname }} {{ row.lastname }}">{{ row.firstname }} {{ row.lastname }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md">
+            <select class="form-select" id="courseselect">
+                {% for row in course %}
+                <option value="{{ row.coursetitle }}">{{ row.coursetitle }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center mt-5">
+    <button class="btn btn-primary" id="btnenroll">Enroll</button>
+</div>
+
+<div class="container-fluid text-center mt-5">
+    <h4 id="firsth4"> </h4>
+</div>
+
+<div class="container md-4 text-center mt-5">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Course Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in enrollment %}
+            <tr>
+                <td>{{ row.studentname }}</td>
+                <td>{{ row.coursetype }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<!-- Pagination for the student enrollment data table -->
+<div class="pagination justify-content-center"> 
+    <span class="step-links">
+        {% if enrollment.has_previous %}
+        <a href="?page=1">First</a>
+        <a href="?page={{ enrollment.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        Page {{ enrollment.number }} of {{ enrollment.paginator.num_pages }}
+
+        {% if enrollment.has_next %}
+        <a href="?page={{ enrollment.next_page_number }}">Next</a>
+        <a href="?page={{ enrollment.paginator.num_pages }}">Last</a>
+        {% endif %}
+        
+    </span>
+</div>
+
+<script>
+    $('document').ready(function(){
+
+        $('#btnenroll').click(function(){
+            let selected_student = $('#studentselect').val()
+            let selected_course = $('#courseselect').val()
+
+            $.ajax({
+                
+                url: "{% url 'saveenrollment' %}",
+                data: {
+                    studentdata: selected_student,
+                    coursedata: selected_course
+                },
+
+                success: function(data){
+
+                    if(data=="success"){
+                        /* refresh the page */
+                        window.location = "{% url 'enrollment' %}"
+                    }
+                    else if(data=="already_enrolled"){
+                        $("#firsth4").html("Error enrolling the student. Student cannot be enrolled in the same course.")
+                    }
+                    else if(data=="limit_reached"){
+                        $("#firsth4").html("Error enrolling the student. Student cannot be enrolled in more than 3 courses.")
+                    }
+                    else{
+                        $("#firsth4").html("Error enrolling the student. Student cannot be enrolled in the same course or more than 3 courses.")
+                    }
+
+                }
+            })
+        })
+
+    })
+</script>
+
+{% endblock %}

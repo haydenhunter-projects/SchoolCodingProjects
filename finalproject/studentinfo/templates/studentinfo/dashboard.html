@@ -1,0 +1,139 @@
+{% extends "studentinfo/base.html" %}
+
+{% block content %}
+
+<!-- This is the main dashboard page that will display the data from the database in a user friendly way -->
+<div class="container-fluid text-center mt-5">
+    <h4> Student Information Dashboard </h4>
+
+    <!-- Using a bootstrap container grid I am able to stack the dashboard cards horizontally above the chart-->
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <!-- This card will show the total amount of enrollments in the database -->
+            <div class="card col-sm-4 text-center" id="total_enrollment_card">
+                <h4 class="card-title">Total Enrollments</h4>
+                <h2>{{ total_enrollment}}</h2>
+            </div>
+
+            <!-- This card will show the total amount of courses offered in the database-->
+            <div class="card col-sm-4 text-center" id="total_courses_card">
+                <h4 class="card-title">Total Courses Offered</h4>
+                <h2>{{ total_courses }}</h2>
+            </div>
+
+            <!-- This card will show the total amount of students in the database -->
+            <div class="card col-sm-4 text-center" id="total_students_card">
+                <h4 class="card-title">Total Students</h4>
+                <h2>{{ total_students}}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mt-5">
+        <canvas id="mycanvas" width="400px" height="100px"></canvas>
+    </div>
+</div>
+
+<!-- Using a bootstrap container grid I am able to stack the dashboard cards horizontally below the chart-->
+<div class="container-fluid mt-5 mb-5">
+    <div class="row">
+
+        <!-- This card will show the average GPA of all students in the database -->
+        <div class="card col-sm-4 text-center" id="average_gpa_card">
+            <h4 class="card-title">Average GPA of Students</h4>
+            <!-- When using django aggregated data it renders as a dictionary -->
+            <!-- So we access the value with the key gpa__avg -->
+            <!-- https://www.w3schools.com/django/ref_filters_floatformat.php -->
+            <!-- This refrence I learned how to limit the number of decimal places displayed -->
+            <h2>{{ average_gpa.gpa__avg | floatformat:3 }}</h2>
+        </div>
+
+        <!-- This card will show the the total amount of students by year in the database -->
+        <div class="card col-sm-4 text-center" id="student_types_card">
+            <h4 class="card-title">Student Types</h4>
+            <!-- Since I passed it through the view as a dictionary I can iterate over the dictionary -->
+            {% for year, count in studenttype.items %}
+            <h5>{{ year }}: {{ count }}</h5>
+            {% endfor %}
+
+        </div>
+
+        <!-- This card will show the total amount of courses offered in the database -->
+        <div class="card col-sm-4 text-center" id="course_types_card">
+            <h4 class="card-title">Course Departments</h4>
+            <h2>{{ total_departments}}</h2>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+
+<!-- When using django template tag and template syntax code in <script> it will function but it will get angry -->
+<script>
+    // Added a custom plugin to give the chart a border
+    // https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
+    const chartAreaBorder = {
+        id: 'chartAreaBorder',
+        beforeDraw(chart, args, options) {
+        const {ctx, chartArea: {left, top, width, height}} = chart;
+        ctx.save();
+        ctx.strokeStyle = options.borderColor;
+        ctx.lineWidth = options.borderWidth;
+        ctx.setLineDash(options.borderDash || []);
+        ctx.lineDashOffset = options.borderDashOffset;
+        ctx.strokeRect(left, top, width, height);
+        ctx.restore();
+    }
+    };
+    let mychart = document.getElementById("mycanvas")
+    let newchart = new Chart(mychart, {
+        type: 'bar',
+        data: {
+            labels: [
+                {% for row in course %}
+                "{{ row.coursetitle }}",
+                {% endfor %}
+            ],
+            datasets: [{
+                label: "Number of Students Enrolled",
+                data: [
+                    {% for row in course %}
+                    {{ row.studentsenrolled }},
+                    {% endfor %}
+                ],
+                backgroundColor: ['rgb(255, 0, 0, 0.8)']
+            }]
+        },
+        options: {
+            plugins: {
+                // Added a chart title
+                // https://www.chartjs.org/docs/latest/configuration/title.html
+                title: {
+                display: true,
+                    text: "Number of Students Enrolled in Each Course",
+                    font: {
+                        size: 20
+                    }
+                },
+                // Added a custom plugin to give the chart a border
+                // https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
+                chartAreaBorder: {
+                    borderColor: 'black',
+                    borderWidth: 3,
+                }
+            },
+            scales: {
+                y: {
+                    ticks: {
+                        beginAtZero: true,
+                            stepSize: 1
+                    }
+                }
+            }
+        },
+        // Added a custom plugin to give the chart a border
+        // https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
+        plugins: [chartAreaBorder]
+    });
+
+</script>
+{% endblock %}

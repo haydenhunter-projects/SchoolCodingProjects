@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- This html file holds the majority of the cdn links used for this project -->
+<!-- It also displays the nav bar at the top of the website -->
+    <head>
+        <title>Student Information Dashboard</title>
+        <meta charset="utf-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'studentinfo/css/style.css' %}" />
+    </head>
+
+    <body>
+        <header class ="navbar navbar-expand bg-dark">
+            <a href="#" class="navbar-brand text-white">BUS 443</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'dashboard' %}">Dashboard</a>
+                </li>
+                <li>
+                    <a class="nav-link text-white" href="{% url 'studentdetails' %}">Student Details</a>
+                </li>
+                <li>
+                    <a class="nav-link text-white" href="{% url 'coursedetails' %}">Course Details</a>
+                </li>
+                <li>
+                    <a class="nav-link text-white" href="{% url 'enrollment' %}">Enrollment</a>
+                </li>
+            </ul>
+
+            {% if not user.is_authenticated %}
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-secondary" href="{% url 'login' %}">Login</a>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-secondary" href="{% url 'logout' %}">Logout</a>
+                </li>
+            </ul>
+            {% endif %}
+
+        </header>
+
+        {% block container %}
+
+        <div>
+
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+
+        {% endblock %}
+
+    </body>
+
+</html>

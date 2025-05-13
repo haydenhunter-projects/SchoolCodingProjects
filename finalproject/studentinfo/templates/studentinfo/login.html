@@ -1,0 +1,25 @@
+{% extends "studentinfo/base.html" %}
+
+{% block content %}
+
+<!-- This html class is used to provide a landing page when you access the website, prompting a user to login -->
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h4> Please log in </h4>
+        </div>
+        <div class="card-body">
+            <form class="form" method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <table class="table">
+                    <!-- login is username: admin -->
+                    <!--          password: admin-->
+                    {{ form }}
+                </table>
+                <input type="submit" class="btn btn-primary" value="Submit"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

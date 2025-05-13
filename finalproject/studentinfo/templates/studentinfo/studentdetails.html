@@ -1,0 +1,48 @@
+{% extends 'studentinfo/base.html' %}
+
+{% block content %}
+<!-- This html class is used to populate the student details portion of the website -->
+        <div class="container-fluid text-center mt-5">
+            <h2>Student Data</h2>
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <th>Student ID</th>
+                    <th>Student First Name</th>
+                    <th>Student Last Name</th>
+                    <th>Student Major</th>
+                    <th>Student Year</th>
+                    <th>Student GPA</th>
+                </thead>
+                <tbody>
+                    {% for row in studentdata %}
+                    <tr>
+                        <td>{{ row.studentid }}</td>
+                        <td>{{ row.firstname }}</td>
+                        <td>{{ row.lastname }}</td>
+                        <td>{{ row.major }}</td>
+                        <td>{{ row.year }}</td>
+                        <td>{{ row.gpa }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <!-- Pagination for the student data table -->
+            <div class="pagination justify-content-center"> 
+                <span class="step-links">
+                    {% if studentdata.has_previous %}
+                    <a href="?page=1">First</a>
+                    <a href="?page={{ studentdata.previous_page_number }}">Previous</a>
+                    {% endif %}
+
+                    Page {{ studentdata.number }} of {{ studentdata.paginator.num_pages }}
+
+                    {% if studentdata.has_next %}
+                    <a href="?page={{ studentdata.next_page_number }}">Next</a>
+                    <a href="?page={{ studentdata.paginator.num_pages }}">Last</a>
+                    {% endif %}
+                    
+                </span>
+            </div>
+
+        </div>
+{% endblock %}
